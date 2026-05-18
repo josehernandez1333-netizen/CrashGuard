@@ -1,0 +1,12 @@
+credentials.json
+token.json
+.env
+venv/
+__pycache__/
+runtime/
+evidence/
+camera_buffer/
+*.mp4
+*.avi
+*.log
+casco
