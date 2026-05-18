@@ -4,6 +4,9 @@ import mysql.connector
 from datetime import datetime
 import os
 
+# =========================
+# INICIALIZAR FLASK
+# =========================
 app = Flask(__name__)
 CORS(app)
 
@@ -18,7 +21,7 @@ db_config = {
 }
 
 # =========================
-# CONFIGURACIÓN ALERTAS
+# CONFIGURACIÓN GENERAL
 # =========================
 configuracion = {
     "numero_destino": "+523310944966",
@@ -26,20 +29,20 @@ configuracion = {
 }
 
 # =========================
-# CONEXIÓN DB
+# CONEXIÓN MYSQL
 # =========================
 def conectar_db():
     return mysql.connector.connect(**db_config)
 
 # =========================
-# INTERFAZ
+# INTERFAZ PRINCIPAL
 # =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 # =========================
-# TEST
+# TEST SERVIDOR
 # =========================
 @app.route("/test", methods=["GET"])
 def test():
@@ -76,7 +79,7 @@ def recibir_alerta():
         cursor = conn.cursor()
 
         # =========================
-        # VERIFICAR SI YA EXISTE
+        # VERIFICAR SI EXISTE EVENTO
         # =========================
         cursor.execute("""
             SELECT id
@@ -161,7 +164,7 @@ def recibir_alerta():
         }), 500
 
 # =========================
-# OBTENER DATOS
+# OBTENER ALERTAS
 # =========================
 @app.route("/api/datos", methods=["GET"])
 def obtener_datos():
@@ -204,7 +207,7 @@ def obtener_datos():
         }), 500
 
 # =========================
-# OBTENER CONFIG
+# OBTENER CONFIGURACIÓN
 # =========================
 @app.route("/api/config", methods=["GET"])
 def get_config():
@@ -215,7 +218,7 @@ def get_config():
     })
 
 # =========================
-# GUARDAR CONFIG
+# GUARDAR CONFIGURACIÓN
 # =========================
 @app.route("/api/config", methods=["POST"])
 def set_config():
@@ -265,3 +268,4 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=port,
         debug=False
+    )
